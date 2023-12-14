@@ -1,0 +1,8 @@
+version: "3.8"
+
+services:
+  node_exporter:
+    image: localhost/prom-scrap-size
+    container_name: node_exporter
+    ports:
+      - 9200:9200
