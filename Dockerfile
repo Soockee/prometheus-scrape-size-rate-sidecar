@@ -28,19 +28,19 @@ COPY --chmod=777 get_prom_data_size.sh /tmp/node_exporter/get_prom_data_size.sh
 
 # Prepare directories for Node Exporter
 # Set up Dec group & user
-RUN groupadd -f devuser
-RUN useradd -g devuser --shell /bin/bash devuser
+RUN groupadd -f nobody
+RUN useradd -g nobody --shell /bin/bash nobody
 
 COPY --chmod=777 cronjob /etc/cron.d/cronjob
 
-RUN crontab -u devuser /etc/cron.d/cronjob \
+RUN crontab -u nobody /etc/cron.d/cronjob \
     && chmod u+s /usr/sbin/cron
 
 
 # Create a startup script
 COPY --chmod=777 start.sh start.sh
 
-USER devuser
+USER nobody
 
 # Run the startup script when the container starts
 ENTRYPOINT ["./start.sh"]
