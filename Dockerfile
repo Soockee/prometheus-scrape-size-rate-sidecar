@@ -7,7 +7,7 @@ ENV TARGET_DATA_DIR=${TARGET_DATA_DIR}
 RUN apt-get update && apt-get upgrade -y
 
 # Install necessary packages
-RUN apt-get install -y wget cron
+RUN apt-get install -y wget curl vim
 
 # Prepare directories for Node Exporter
 RUN mkdir -p /tmp/node_exporter
@@ -21,15 +21,6 @@ RUN tar -xvf /tmp/node_exporter/node_exporter-1.7.0.linux-amd64.tar.gz -C /tmp/n
 RUN mv /tmp/node_exporter/node_exporter-1.7.0.linux-amd64/node_exporter /usr/local/bin/
 
 RUN chown -R nobody:nobody /tmp/node_exporter
-
-# Copy get_prom_data_size.sh script into the image
-COPY --chmod=777 get_prom_data_size.sh /tmp/node_exporter/get_prom_data_size.sh
-
-COPY --chmod=777 cronjob /etc/cron.d/cronjob
-
-RUN crontab -u nobody /etc/cron.d/cronjob \
-    && chmod u+s /usr/sbin/cron
-
 
 # Create a startup script
 COPY --chmod=777 start.sh start.sh
