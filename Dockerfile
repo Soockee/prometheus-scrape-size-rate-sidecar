@@ -24,7 +24,7 @@ RUN mkdir /etc/node_exporter
 RUN chown node_exporter:node_exporter /etc/node_exporter /usr/local/bin/node_exporter /var/lib/node_exporter
 
 # Copy get_prom_data_size.sh script into the image
-COPY --chmod=777 get_prom_data_size.sh /tmp/node_exporter/get_prom_data_size.sh
+COPY --chmod=777 get_prom_data_size.sh get_prom_data_size.sh
 
 # Prepare directories for Node Exporter
 # Set up Dec group & user
