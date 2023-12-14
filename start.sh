@@ -10,6 +10,8 @@ node_prometheus_data_size_kilobytes ${size}" >/tmp/node_exporter/custom_metrics.
     echo "${TARGET_DATA_DIR} size:${size}" 
 }
 
+get_prom_data_size
+
 # Loop to continuously update the metrics
 while true; do
     echo "Running get_prom_data_size.sh"
