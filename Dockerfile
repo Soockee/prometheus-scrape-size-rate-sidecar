@@ -29,7 +29,6 @@ COPY --chmod=777 get_prom_data_size.sh /tmp/node_exporter/get_prom_data_size.sh
 # Prepare directories for Node Exporter
 # Set up Dec group & user
 RUN groupadd -f nobody
-RUN useradd -g nobody --shell /bin/bash nobody
 
 COPY --chmod=777 cronjob /etc/cron.d/cronjob
 
