@@ -5,8 +5,8 @@ echo "Checking ${TARGET_DATA_DIR}"
 get_prom_data_size() {
     size=$(du -s "${TARGET_DATA_DIR}" | cut -f1)
     echo "# HELP node_prometheus_data_size_kilobytes Size of specified folder in kilobytes
-# TYPE node_prometheus_data_size_kilobytes gauge
-node_prometheus_data_size_kilobytes ${size}" >/tmp/node_exporter/custom_metrics.prom
+    # TYPE node_prometheus_data_size_kilobytes gauge
+    node_prometheus_data_size_kilobytes ${size}" >/tmp/node_exporter/metrics/custom_metrics.prom
     echo "${TARGET_DATA_DIR} size:${size}" 
 }
 
@@ -20,4 +20,4 @@ while true; do
 done &
 
 
-exec node_exporter --web.listen-address=:9200 --collector.disable-defaults --collector.textfile.directory=/tmp/node_exporter/custom_metrics.prom --collector.textfile
+./tmp/node_exporter/node_exporter --web.listen-address=:9200 --collector.disable-defaults --collector.textfile.directory=/tmp/node_exporter/metrics --collector.textfile

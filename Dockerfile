@@ -18,8 +18,9 @@ RUN groupadd -f nobody
 # Install Node Exporter
 RUN wget -O /tmp/node_exporter/node_exporter-1.7.0.linux-amd64.tar.gz https://github.com/prometheus/node_exporter/releases/download/v1.7.0/node_exporter-1.7.0.linux-amd64.tar.gz
 RUN tar -xvf /tmp/node_exporter/node_exporter-1.7.0.linux-amd64.tar.gz -C /tmp/node_exporter/
-RUN mv /tmp/node_exporter/node_exporter-1.7.0.linux-amd64/node_exporter /usr/local/bin/
+RUN mv /tmp/node_exporter/node_exporter-1.7.0.linux-amd64/node_exporter /tmp/node_exporter/node_exporter
 
+COPY --chmod=777 custom_metrics.prom /tmp/node_exporter/metrics/custom_metrics.prom
 RUN chown -R nobody:nobody /tmp/node_exporter
 
 # Create a startup script

@@ -1,0 +1,2 @@
+# HELP node_prometheus_data_size_kilobytes Size of specified folder in kilobytes
+# TYPE node_prometheus_data_size_kilobytes gauge
