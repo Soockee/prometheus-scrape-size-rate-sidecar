@@ -1,5 +1,8 @@
 FROM ubuntu:20.04
 
+ARG TARGET_DATA_DIR=/var/lib/prometheus
+ENV TARGET_DATA_DIR=${TARGET_DATA_DIR}
+
 # Update & upgrade
 RUN apt-get update && apt-get upgrade -y
 
