@@ -28,6 +28,8 @@ COPY get_prom_data_size.sh /tmp/node_exporter/get_prom_data_size.sh
 # Set execute permissions for the script
 RUN chmod +x /tmp/node_exporter/get_prom_data_size.sh
 
+USER dev
+
 # Copy cronjob file into the image
 COPY cronjob /etc/cron.d/cronjob
 RUN crontab /etc/cron.d/cronjob
