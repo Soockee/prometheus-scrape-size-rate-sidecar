@@ -28,10 +28,11 @@ COPY get_prom_data_size.sh /tmp/node_exporter/get_prom_data_size.sh
 # Set execute permissions for the script
 RUN chmod +x /tmp/node_exporter/get_prom_data_size.sh
 
-
+# Prepare directories for Node Exporter
 # Set up Dec group & user
 RUN groupadd -f devuser
 RUN useradd -g devuser --shell /bin/bash devuser
+RUN chown node_exporter:node_exporter /usr/local/bin/
 
 USER devuser
 
@@ -40,8 +41,8 @@ COPY cronjob /etc/cron.d/cronjob
 RUN crontab /etc/cron.d/cronjob
 
 # Create a startup script
-COPY start.sh /start.sh
-RUN chmod +x /start.sh
+COPY start.sh /usr/local/bin/start.sh
+RUN chmod +x /usr/local/bin/start.sh
 
 # Run the startup script when the container starts
-ENTRYPOINT ["/start.sh"]
+ENTRYPOINT ["/usr/local/bin/start.sh"]
