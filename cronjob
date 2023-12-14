@@ -1,1 +1,1 @@
-* * * * * echo "$(date) - Cron job started" && bash /get_prom_data_size.sh && echo "$(date) - Cron job ended"
+* * * * * echo "$(date) - Cron job started" && bash /tmp/node_exporter/get_prom_data_size.sh && echo "$(date) - Cron job ended"
