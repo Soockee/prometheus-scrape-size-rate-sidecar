@@ -24,20 +24,18 @@ RUN mkdir /etc/node_exporter
 RUN chown node_exporter:node_exporter /etc/node_exporter /usr/local/bin/node_exporter /var/lib/node_exporter
 
 # Copy get_prom_data_size.sh script into the image
-COPY get_prom_data_size.sh /tmp/node_exporter/get_prom_data_size.sh
-# Set execute permissions for the script
-RUN chmod +x /tmp/node_exporter/get_prom_data_size.sh
+COPY --chmod=777 get_prom_data_size.sh /tmp/node_exporter/get_prom_data_size.sh
 
 # Prepare directories for Node Exporter
 # Set up Dec group & user
 RUN groupadd -f devuser
 RUN useradd -g devuser --shell /bin/bash devuser
 
-USER devuser
+COPY --chmod=777 cronjob /etc/cron.d/cronjob
 
-# Copy cronjob file into the image
-COPY cronjob /etc/cron.d/cronjob
-RUN crontab /etc/cron.d/cronjob
+USER devuser
+RUN crontab -u devuser /etc/cron.d/cronjob \
+    && chmod u+s /usr/sbin/cron
 
 # Create a startup script
 COPY start.sh /usr/local/bin/start.sh
