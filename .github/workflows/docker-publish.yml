@@ -1,4 +1,4 @@
-name: Build and Push to Nexus
+name: Build and Push to Github Registry
 
 on:
   push:
@@ -11,13 +11,15 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v2
 
-      - name: Login to Nexus Docker Registry
-        run: docker login -u ${{ secrets.NEXUS_USERNAME }} -p ${{ secrets.NEXUS_PASSWORD }} https://nexus.devtools.lhsystems.int/repository/o11y-prometheus-scrape-size-rate/
+      - name: Login to GitHub Container Registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
       - name: Build and Tag Docker Image
-        run: docker build -t o11y-prometheus-scrape-size-rate:latest .
+        run: |
+          docker build -t ghcr.io/${{ github.repository }}/scrape-prom:latest .
+          docker tag ghcr.io/${{ github.repository }}/scrape-prom:latest ghcr.io/${{ github.repository }}/scrape-prom:master
 
-      - name: Push Docker Image to Nexus
-        run: docker push https://nexus.devtools.lhsystems.int/repository/o11y-prometheus-scrape-size-rate/o11y-prometheus-scrape-size-rate:latest
+      - name: Push Docker Image to Github Registry
+        run: docker push ghcr.io/${{ github.repository }}/scrape-prom:latest
