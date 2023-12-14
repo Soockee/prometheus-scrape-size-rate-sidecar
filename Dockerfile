@@ -32,8 +32,6 @@ RUN chmod +x /tmp/node_exporter/get_prom_data_size.sh
 # Set up Dec group & user
 RUN groupadd -f devuser
 RUN useradd -g devuser --shell /bin/bash devuser
-RUN mkdir /etc/devuser
-RUN chown devuser:devuser /etc/devuser /usr/local/bin/devuser /var/lib/devuser
 
 USER devuser
 
