@@ -33,12 +33,14 @@ RUN useradd -g devuser --shell /bin/bash devuser
 
 COPY --chmod=777 cronjob /etc/cron.d/cronjob
 
-USER devuser
 RUN crontab -u devuser /etc/cron.d/cronjob \
     && chmod u+s /usr/sbin/cron
 
+
 # Create a startup script
-COPY start.sh /usr/local/bin/start.sh
+COPY --chmod=777 start.sh start.sh
+
+USER devuser
 
 # Run the startup script when the container starts
-ENTRYPOINT ["/usr/local/bin/start.sh"]
+ENTRYPOINT ["./start.sh"]
