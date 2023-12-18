@@ -1,7 +1,9 @@
 FROM ubuntu:20.04
 
 ARG TARGET_DATA_DIR=/var/lib/prometheus
+
 ENV TARGET_DATA_DIR=${TARGET_DATA_DIR}
+ENV METRICSFILE=/tmp/node_exporter/metrics/custom_metrics.prom
 
 # Update & upgrade
 RUN apt-get update && apt-get upgrade -y
@@ -20,7 +22,7 @@ RUN wget -O /tmp/node_exporter/node_exporter-1.7.0.linux-amd64.tar.gz https://gi
 RUN tar -xvf /tmp/node_exporter/node_exporter-1.7.0.linux-amd64.tar.gz -C /tmp/node_exporter/
 RUN mv /tmp/node_exporter/node_exporter-1.7.0.linux-amd64/node_exporter /tmp/node_exporter/node_exporter
 
-COPY --chmod=777 custom_metrics.prom /tmp/node_exporter/metrics/custom_metrics.prom
+COPY --chmod=777 custom_metrics.prom ${METRICSFILE}
 RUN chown -R nobody:nobody /tmp/node_exporter
 
 # Create a startup script
