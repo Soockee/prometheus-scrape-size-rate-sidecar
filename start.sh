@@ -17,7 +17,7 @@ get_prom_data_size() {
     echo "node_prometheus_data_size_kilobytes ${size}" >> "${METRICSFILE}"
     echo "${TARGET_DATA_DIR} size: ${size}"
 
-    find . -maxdepth 1 -mindepth 1 -type d -exec du -s {} + | awk -v METRICSFILE="${METRICSFILE}" '
+    find $TARGET_DATA_DIR -maxdepth 1 -mindepth 1 -type d -exec du -s {} + | awk -v METRICSFILE="${METRICSFILE}" '
         BEGIN {
             printf("# HELP node_prometheus_folder_size_kilobytes Size of block inside specified folder in kilobytes\n");
             printf("# TYPE node_prometheus_folder_size_kilobytes gauge\n");
