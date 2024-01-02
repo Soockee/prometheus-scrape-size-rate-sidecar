@@ -12,9 +12,9 @@ handle_sigint() {
 # Function to get Prometheus data size
 get_prom_data_size() {
     size=$(du -s --block-size=1K "${TARGET_DATA_DIR}" | cut -f1)
-    echo "# HELP node_prometheus_data_size_kilobytes Size of specified folder in kilobytes" > "${METRICSFILE}"
-    echo "# TYPE node_prometheus_data_size_kilobytes gauge" >> "${METRICSFILE}"
-    echo "node_prometheus_data_size_kilobytes ${size}" >> "${METRICSFILE}"
+    echo "# HELP node_prometheus_data_size_kilobytes Size of specified folder in kilobytes" >"${METRICSFILE}"
+    echo "# TYPE node_prometheus_data_size_kilobytes gauge" >>"${METRICSFILE}"
+    echo "node_prometheus_data_size_kilobytes ${size}" >>"${METRICSFILE}"
     echo "${TARGET_DATA_DIR} size: ${size}"
 
     find $TARGET_DATA_DIR -maxdepth 1 -mindepth 1 -type d -exec du -s {} + | awk -v METRICSFILE="${METRICSFILE}" '
